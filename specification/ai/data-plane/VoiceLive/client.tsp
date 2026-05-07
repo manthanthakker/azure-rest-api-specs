@@ -25,6 +25,7 @@ using Azure.ClientGenerator.Core;
 @@access(VoiceLive.ClientEventResponseCreate, Access.public, "python");
 @@access(VoiceLive.ClientEventResponseCancel, Access.public, "python");
 @@access(VoiceLive.ClientEventSessionAvatarConnect, Access.public, "python");
+@@access(VoiceLive.ClientEventRtcCallSdpCreate, Access.public, "python");
 
 @@access(VoiceLive.ServerEventSessionAvatarConnecting, Access.public, "python");
 @@access(VoiceLive.ServerEventSessionCreated, Access.public, "python");
@@ -96,6 +97,9 @@ using Azure.ClientGenerator.Core;
 @@access(VoiceLive.ServerEventResponseTextDelta, Access.public, "python");
 @@access(VoiceLive.ServerEventResponseTextDone, Access.public, "python");
 @@access(VoiceLive.ServerEventSessionUpdated, Access.public, "python");
+@@access(VoiceLive.ServerEventRtcCallSdpCreated, Access.public, "python");
+@@access(VoiceLive.ServerEventRtcCallError, Access.public, "python");
+@@access(VoiceLive.RtcCallErrorDetails, Access.public, "python");
 
 @@access(VoiceLive.ToolChoice, Access.public, "python");
 
@@ -172,6 +176,10 @@ using Azure.ClientGenerator.Core;
 );
 @@access(VoiceLive.ServerEventResponseMcpCallFailed, Access.public, "csharp");
 @@access(VoiceLive.MCPApprovalResponseRequestItem, Access.internal, "csharp");
+@@access(VoiceLive.ClientEventRtcCallSdpCreate, Access.internal, "csharp");
+@@access(VoiceLive.ServerEventRtcCallSdpCreated, Access.public, "csharp");
+@@access(VoiceLive.ServerEventRtcCallError, Access.public, "csharp");
+@@access(VoiceLive.RtcCallErrorDetails, Access.public, "csharp");
 
 @@clientName(VoiceLive.Modality, "InteractionModality", "csharp");
 @@clientName(VoiceLive.Animation, "AnimationOptions", "csharp");
@@ -433,6 +441,14 @@ using Azure.ClientGenerator.Core;
 @@clientName(VoiceLive.MCPServer, "VoiceLiveMcpServerDefinition", "csharp");
 @@clientName(VoiceLive.MCPTool, "VoiceLiveMcpTool", "csharp");
 @@clientName(VoiceLive.Background, "VideoBackground", "csharp");
+@@clientName(VoiceLive.ServerEventRtcCallSdpCreated,
+  "SessionUpdateRtcCallSdpCreated",
+  "csharp"
+);
+@@clientName(VoiceLive.ServerEventRtcCallError,
+  "SessionUpdateRtcCallError",
+  "csharp"
+);
 @@alternateType(VoiceLive.RequestSession.turn_detection, unknown, "csharp");
 
 @@access(VoiceLive.ClientEventSessionUpdate, Access.public, "java");
@@ -451,6 +467,7 @@ using Azure.ClientGenerator.Core;
 @@access(VoiceLive.ClientEventResponseCreate, Access.public, "java");
 @@access(VoiceLive.ClientEventResponseCancel, Access.public, "java");
 @@access(VoiceLive.ClientEventSessionAvatarConnect, Access.public, "java");
+@@access(VoiceLive.ClientEventRtcCallSdpCreate, Access.public, "java");
 
 @@access(VoiceLive.ServerEventSessionAvatarConnecting, Access.public, "java");
 @@access(VoiceLive.ServerEventSessionCreated, Access.public, "java");
@@ -510,6 +527,9 @@ using Azure.ClientGenerator.Core;
 @@access(VoiceLive.ServerEventResponseTextDelta, Access.public, "java");
 @@access(VoiceLive.ServerEventResponseTextDone, Access.public, "java");
 @@access(VoiceLive.ServerEventSessionUpdated, Access.public, "java");
+@@access(VoiceLive.ServerEventRtcCallSdpCreated, Access.public, "java");
+@@access(VoiceLive.ServerEventRtcCallError, Access.public, "java");
+@@access(VoiceLive.RtcCallErrorDetails, Access.public, "java");
 
 @@access(VoiceLive.ToolChoice, Access.public, "java");
 @@access(VoiceLive.Voice, Access.public, "java");
@@ -524,6 +544,14 @@ using Azure.ClientGenerator.Core;
 @@clientName(VoiceLive.Modality, "InteractionModality", "java");
 @@clientName(VoiceLive.Animation, "AnimationOptions", "java");
 @@clientName(VoiceLive.Tool, "VoiceLiveToolInvocation", "java");
+@@clientName(VoiceLive.ServerEventRtcCallSdpCreated,
+  "SessionUpdateRtcCallSdpCreated",
+  "java"
+);
+@@clientName(VoiceLive.ServerEventRtcCallError,
+  "SessionUpdateRtcCallError",
+  "java"
+);
 @@clientName(VoiceLive.AzureCustomVoice.custom_lexicon_url,
   "CustomLexiconUri",
   "java"

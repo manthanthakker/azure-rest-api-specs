@@ -24,6 +24,9 @@ union ClientEventType {
 
   @added(Versions.v2026_01_01_preview)
   mcp_approval_response: "mcp_approval_response",
+
+  @added(Versions.v2026_01_01_preview)
+  rtc_call_sdp_create: "rtc.call.sdp.create",
 }
 
 /** Server event types used in VoiceLive protocol. */
@@ -92,4 +95,10 @@ union ServerEventType {
 
   @added(Versions.v2026_01_01_preview)
   response_mcp_call_failed: "response.mcp_call.failed",
+
+  @added(Versions.v2026_01_01_preview)
+  rtc_call_sdp_created: "rtc.call.sdp.created",
+
+  @added(Versions.v2026_01_01_preview)
+  rtc_call_error: "rtc.call.error",
 }

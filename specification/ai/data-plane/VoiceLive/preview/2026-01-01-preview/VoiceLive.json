@@ -1109,6 +1109,25 @@
       ],
       "x-ms-discriminator-value": "response.create"
     },
+    "ClientEventRtcCallSdpCreate": {
+      "type": "object",
+      "description": "Initiates a WebRTC call by sending an SDP offer for media negotiation.",
+      "properties": {
+        "sdp_offer": {
+          "type": "string",
+          "description": "The SDP offer from the client for WebRTC negotiation."
+        }
+      },
+      "required": [
+        "sdp_offer"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/ClientEvent"
+        }
+      ],
+      "x-ms-discriminator-value": "rtc.call.sdp.create"
+    },
     "ClientEventSessionAvatarConnect": {
       "type": "object",
       "description": "Sent when the client connects and provides its SDP (Session Description Protocol)\n\nfor avatar-related media negotiation.",
@@ -1166,7 +1185,8 @@
         "response.create",
         "response.cancel",
         "session.avatar.connect",
-        "mcp_approval_response"
+        "mcp_approval_response",
+        "rtc.call.sdp.create"
       ],
       "x-ms-enum": {
         "name": "ClientEventType",
@@ -1239,6 +1259,10 @@
           {
             "name": "mcp_approval_response",
             "value": "mcp_approval_response"
+          },
+          {
+            "name": "rtc_call_sdp_create",
+            "value": "rtc.call.sdp.create"
           }
         ]
       }
@@ -3343,6 +3367,28 @@
       ],
       "x-ms-discriminator-value": "text"
     },
+    "RtcCallErrorDetails": {
+      "type": "object",
+      "description": "Error details for an RTC call failure.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The error category: `invalid_request_error` or `server_error`."
+        },
+        "code": {
+          "type": "string",
+          "description": "A machine-readable error code."
+        },
+        "message": {
+          "type": "string",
+          "description": "A human-readable error description."
+        }
+      },
+      "required": [
+        "type",
+        "message"
+      ]
+    },
     "Scene": {
       "type": "object",
       "description": "Configuration for avatar's zoom level, position, rotation and movement amplitude in the video frame.",
@@ -4656,6 +4702,57 @@
       ],
       "x-ms-discriminator-value": "response.text.done"
     },
+    "ServerEventRtcCallError": {
+      "type": "object",
+      "description": "Returned when an error occurs during an RTC call operation.",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "description": "The operation that caused the error (e.g., `rtc.call.sdp.create`)."
+        },
+        "rtc_call_id": {
+          "type": "string",
+          "description": "The RTC call identifier, if available."
+        },
+        "error": {
+          "$ref": "#/definitions/RtcCallErrorDetails",
+          "description": "The error details."
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/ServerEvent"
+        }
+      ],
+      "x-ms-discriminator-value": "rtc.call.error"
+    },
+    "ServerEventRtcCallSdpCreated": {
+      "type": "object",
+      "description": "Returned when the WebRTC SDP exchange completes successfully with an SDP answer.",
+      "properties": {
+        "rtc_call_id": {
+          "type": "string",
+          "description": "The unique identifier for this RTC call session."
+        },
+        "sdp_answer": {
+          "type": "string",
+          "description": "The SDP answer from the server for WebRTC negotiation."
+        }
+      },
+      "required": [
+        "rtc_call_id",
+        "sdp_answer"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/ServerEvent"
+        }
+      ],
+      "x-ms-discriminator-value": "rtc.call.sdp.created"
+    },
     "ServerEventSessionAvatarConnecting": {
       "type": "object",
       "description": "Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer.",
@@ -4758,7 +4855,9 @@
         "response.mcp_call_arguments.done",
         "response.mcp_call.in_progress",
         "response.mcp_call.completed",
-        "response.mcp_call.failed"
+        "response.mcp_call.failed",
+        "rtc.call.sdp.created",
+        "rtc.call.error"
       ],
       "x-ms-enum": {
         "name": "ServerEventType",
@@ -4939,6 +5038,14 @@
           {
             "name": "response_mcp_call_failed",
             "value": "response.mcp_call.failed"
+          },
+          {
+            "name": "rtc_call_sdp_created",
+            "value": "rtc.call.sdp.created"
+          },
+          {
+            "name": "rtc_call_error",
+            "value": "rtc.call.error"
           }
         ]
       }

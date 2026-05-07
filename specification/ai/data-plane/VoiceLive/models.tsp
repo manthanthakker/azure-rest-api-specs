@@ -1429,3 +1429,65 @@ model ServerEventResponseMcpCallFailed extends ServerEvent {
   /** The index of the output associated with the event. */
   output_index: int32;
 }
+
+// ─── WebRTC RTC Call Events ───
+
+/** Initiates a WebRTC call by sending an SDP offer for media negotiation. */
+#suppress "@azure-tools/typespec-azure-core/casing-style" // Service message format is snake_case to remain close to OpenAI style.
+@added(Versions.v2026_01_01_preview)
+@usage(RequestUsage)
+model ClientEventRtcCallSdpCreate extends ClientEvent {
+  /** The event type, must be `rtc.call.sdp.create`. */
+  type: ClientEventType.rtc_call_sdp_create;
+
+  /** The SDP offer from the client for WebRTC negotiation. */
+  sdp_offer: string;
+}
+
+/** Returned when the WebRTC SDP exchange completes successfully with an SDP answer. */
+#suppress "@azure-tools/typespec-azure-core/casing-style" // Service message format is snake_case to remain close to OpenAI style.
+@added(Versions.v2026_01_01_preview)
+@usage(ResponseUsage)
+model ServerEventRtcCallSdpCreated extends ServerEvent {
+  /** The event type, must be `rtc.call.sdp.created`. */
+  type: ServerEventType.rtc_call_sdp_created;
+
+  /** The unique identifier for this RTC call session. */
+  rtc_call_id: string;
+
+  /** The SDP answer from the server for WebRTC negotiation. */
+  sdp_answer: string;
+}
+
+/** Error details for an RTC call failure. */
+#suppress "@azure-tools/typespec-azure-core/casing-style" // Service message format is snake_case to remain close to OpenAI style.
+@added(Versions.v2026_01_01_preview)
+@usage(ResponseUsage)
+model RtcCallErrorDetails {
+  /** The error category: `invalid_request_error` or `server_error`. */
+  type: string;
+
+  /** A machine-readable error code. */
+  code?: string;
+
+  /** A human-readable error description. */
+  message: string;
+}
+
+/** Returned when an error occurs during an RTC call operation. */
+#suppress "@azure-tools/typespec-azure-core/casing-style" // Service message format is snake_case to remain close to OpenAI style.
+@added(Versions.v2026_01_01_preview)
+@usage(ResponseUsage)
+model ServerEventRtcCallError extends ServerEvent {
+  /** The event type, must be `rtc.call.error`. */
+  type: ServerEventType.rtc_call_error;
+
+  /** The operation that caused the error (e.g., `rtc.call.sdp.create`). */
+  operation?: string;
+
+  /** The RTC call identifier, if available. */
+  rtc_call_id?: string;
+
+  /** The error details. */
+  error: RtcCallErrorDetails;
+}
